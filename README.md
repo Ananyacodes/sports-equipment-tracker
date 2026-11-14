@@ -149,6 +149,15 @@ podman push docker.io/<user>/sports-tracker-ui:1.0
 podman pull docker.io/<user>/sports-tracker-api:1.0   # verify from any machine
 ```
 
+Published (public) images — https://hub.docker.com/u/atharvgogia3574 :
+
+- `docker.io/atharvgogia3574/sports-tracker-api:1.0`
+- `docker.io/atharvgogia3574/sports-tracker-ui:1.0`
+- `docker.io/atharvgogia3574/sports-tracker-cli:1.0`
+
+These can replace the local image names in any `podman run` command above,
+so the app runs without building from source.
+
 ## Container management and troubleshooting
 
 ```bash
