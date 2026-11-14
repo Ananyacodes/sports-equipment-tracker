@@ -1,0 +1,9 @@
+$ podman run -d --name db --network equip-net -e POSTGRES_DB=equipment -e POSTGRES_USER=equip -e POSTGRES_PASSWORD=equippass -v pgdata:/var/lib/postgresql/data docker.io/library/postgres:16-alpine
+6c2e11f4e4ece83e4119f69d16cb566b26e5833eceef95c7a64a48928528ca20
+
+$ podman run -d --name api --network equip-net -e PGHOST=db -e PGPORT=5432 -e PGUSER=equip -e PGPASSWORD=equippass -e PGDATABASE=equipment sports-tracker-api:1.0
+e86390c2ce38ff57e576974f58fd5f4b9c9a6f9fe4c176472c4f7a9f96b89777
+
+$ podman run -d --name ui --network equip-net -p 8080:8080 -e API_URL=http://api:5000 sports-tracker-ui:1.0
+4403c6fafb6faeccf0af39d780f504496e9bbfc253ccadb6fe9cfc947ce4e0b9
+

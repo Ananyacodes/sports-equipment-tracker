@@ -1,0 +1,10 @@
+$ podman run -d --name api --network equip-net -e PGHOST=db -e PGUSER=equip -e PGPASSWORD=equippass -e PGDATABASE=equipment sports-tracker-api:1.0 >/dev/null; sleep 4; echo started
+started
+
+$ podman logs --tail 2 api
+ * Running on http://10.89.3.14:5000
+[33mPress CTRL+C to quit[0m
+
+$ curl -4 -s -o /dev/null -w 'UI status: HTTP %{http_code}\n' http://127.0.0.1:8080/
+UI status: HTTP 200
+

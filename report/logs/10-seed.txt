@@ -1,0 +1,9 @@
+$ ./seed.sh
+Adding equipment...
+Issuing equipment (some will cross the low-stock threshold)...
+Recording a return...
+Done. Open http://127.0.0.1:8080 to view the table.
+
+$ curl -4 -s http://127.0.0.1:8080/ -o /dev/null -w 'HTTP %{http_code}\n'
+HTTP 200
+

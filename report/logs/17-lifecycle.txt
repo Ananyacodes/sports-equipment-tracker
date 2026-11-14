@@ -1,0 +1,34 @@
+$ podman stop -t 2 ui
+ui
+
+$ podman ps -a --filter name=ui --format '{{.Names}} {{.Status}}'
+ui Exited (137) 1 second ago
+
+$ podman start ui
+ui
+
+$ podman ps --filter name=ui --format '{{.Names}} {{.Status}}'
+ui Up 1 second
+
+$ podman restart -t 2 api
+api
+
+$ podman inspect api --format 'name={{.Name}} state={{.State.Status}} restarts={{.RestartCount}} image={{.ImageName}} ip={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+name=api state=running restarts=0 image=localhost/sports-tracker-api:1.0 ip=10.89.3.12
+
+$ podman inspect ui --format '{{json .HostConfig.PortBindings}}'
+{"8080/tcp":[{"HostIp":"","HostPort":"8080"}]}
+
+$ podman port ui
+8080/tcp -> 0.0.0.0:8080
+
+$ podman stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}'
+NAME        CPU %       MEM USAGE / LIMIT
+db          0.78%       4.145MB / 16.16GB
+api         6.46%       25MB / 16.16GB
+ui          3.04%       25.05MB / 16.16GB
+
+$ podman top api
+USER        PID         PPID        %CPU        ELAPSED       TTY         TIME        COMMAND
+root        1           0           0.000       6.701211576s  ?           0s          python3 api.py 
+

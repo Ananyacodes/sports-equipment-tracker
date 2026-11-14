@@ -1,0 +1,44 @@
+$ podman exec ui python3 -c "import requests,json;print(json.dumps(requests.get('http://api:5000/equipment').json(),indent=1))"
+[
+ {
+  "low_stock": true,
+  "name": "badminton racket",
+  "quantity": 1,
+  "threshold": 2
+ },
+ {
+  "low_stock": false,
+  "name": "basketball",
+  "quantity": 4,
+  "threshold": 2
+ },
+ {
+  "low_stock": false,
+  "name": "cricket bat",
+  "quantity": 3,
+  "threshold": 3
+ },
+ {
+  "low_stock": false,
+  "name": "football gloves",
+  "quantity": 4,
+  "threshold": 2
+ },
+ {
+  "low_stock": true,
+  "name": "hockey stick",
+  "quantity": 3,
+  "threshold": 4
+ }
+]
+
+$ podman exec ui python3 -c "import requests,json;print(json.dumps(requests.post('http://api:5000/equipment/basketball/issue',json={'quantity':3,'person':'Arjun'}).json(),indent=1))"
+{
+ "message": "Issued 3x 'basketball'",
+ "remaining": 1,
+ "warning": "'basketball' stock (1) is below threshold (2)"
+}
+
+$ podman exec ui python3 -c "import requests,json;r=requests.post('http://api:5000/equipment/hockey%20stick/issue',json={'quantity':10,'person':'Arjun'});print(r.status_code,r.json())"
+400 {'error': 'insufficient stock (have 3, need 10)'}
+

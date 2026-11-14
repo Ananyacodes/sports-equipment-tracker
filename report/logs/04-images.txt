@@ -1,0 +1,9 @@
+$ podman images --filter reference='sports-tracker*'
+REPOSITORY                    TAG         IMAGE ID      CREATED         SIZE
+localhost/sports-tracker-api  1.0         2cb73f994a40  24 seconds ago  68.4 MB
+localhost/sports-tracker-cli  1.0         849690039404  6 minutes ago   51.2 MB
+localhost/sports-tracker-ui   1.0         a15905af0ae1  6 minutes ago   68.2 MB
+
+$ podman images docker.io/library/postgres
+REPOSITORY                  TAG         IMAGE ID      CREATED       SIZE
+docker.io/library/postgres  16-alpine   3cbd775daa28  40 hours ago  297 MB

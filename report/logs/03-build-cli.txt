@@ -1,0 +1,15 @@
+$ podman build -t sports-tracker-cli:1.0 -f Containerfile .
+STEP 1/4: FROM python:3.12-alpine
+STEP 2/4: WORKDIR /app
+--> Using cache b7addf2a94a2d05277d4a835546a06d1a6b0cce6ef99fe48c4b447ede85fd09f
+--> b7addf2a94a2
+STEP 3/4: COPY app.py .
+--> Using cache 3d3322998507bbf35fefbea88f35742e7b8db11815d7f2f99eb6860ee990eb5b
+--> 3d3322998507
+STEP 4/4: ENTRYPOINT ["python3", "app.py"]
+--> Using cache 8496900394045cbcf292fdd074d1746097f685a88307f59bf7d4ea6314f1771f
+COMMIT sports-tracker-cli:1.0
+--> 849690039404
+Successfully tagged localhost/sports-tracker-cli:1.0
+8496900394045cbcf292fdd074d1746097f685a88307f59bf7d4ea6314f1771f
+

@@ -1,0 +1,18 @@
+$ podman network create equip-net
+equip-net
+
+$ podman volume create pgdata
+pgdata
+
+$ podman network ls
+NETWORK ID    NAME                 DRIVER
+941f3b481bb9  acme-wp              bridge
+a256572e8dbe  acme-wp-944          bridge
+7d0b139b7d79  equip-net            bridge
+2f259bab93aa  podman               bridge
+22e0a1f86b0e  q05-compose_default  bridge
+
+$ podman volume ls --filter name=pgdata
+DRIVER      VOLUME NAME
+local       pgdata
+
