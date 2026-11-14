@@ -1,0 +1,19 @@
+$ podman logs api
+Waiting for database... (1/20): Can't create a connection to host db and port 5432 (timeout is None and source_address is None).
+ * Serving Flask app 'api'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.89.3.6:5000
+[33mPress CTRL+C to quit[0m
+
+$ podman logs ui
+ * Serving Flask app 'ui'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.89.3.7:8080
+[33mPress CTRL+C to quit[0m
+

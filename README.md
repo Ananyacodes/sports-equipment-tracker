@@ -45,6 +45,7 @@ DB server (Postgres) behind a single API owner avoids locking issues.
 ├── Containerfile.ui          # Image for the UI service
 ├── requirements-ui.txt
 ├── seed.sh                 # Demo data script (curl against the running UI)
+├── run-network.sh          # Runs the stack on a user-defined Podman network
 └── README.md
 ```
 
@@ -110,6 +111,55 @@ individually or adapt the values.
 podman pod stop equip-pod       # stop everything
 podman pod start equip-pod      # start again — data in pgdata persists
 podman pod rm -f equip-pod      # remove containers (volume `pgdata` survives)
+```
+
+## Alternative — user-defined Podman network
+
+Instead of a pod, the three containers can run on their own bridge
+network and find each other by container name (Podman's DNS):
+
+```bash
+./run-network.sh
+```
+
+which does:
+
+```bash
+podman network create equip-net
+podman volume create pgdata
+podman run -d --name db  --network equip-net -e POSTGRES_DB=equipment \
+  -e POSTGRES_USER=equip -e POSTGRES_PASSWORD=equippass \
+  -v pgdata:/var/lib/postgresql/data docker.io/library/postgres:16-alpine
+podman run -d --name api --network equip-net -e PGHOST=db sports-tracker-api:1.0
+podman run -d --name ui  --network equip-net -p 8080:8080 \
+  -e API_URL=http://api:5000 sports-tracker-ui:1.0
+```
+
+Only `ui` publishes a port; `api` and `db` are reachable only inside
+`equip-net`. Check with `podman network inspect equip-net`.
+
+## Image versioning and registry
+
+```bash
+podman login docker.io
+podman tag sports-tracker-api:1.0 docker.io/<user>/sports-tracker-api:1.0
+podman tag sports-tracker-ui:1.0  docker.io/<user>/sports-tracker-ui:1.0
+podman push docker.io/<user>/sports-tracker-api:1.0
+podman push docker.io/<user>/sports-tracker-ui:1.0
+podman pull docker.io/<user>/sports-tracker-api:1.0   # verify from any machine
+```
+
+## Container management and troubleshooting
+
+```bash
+podman ps -a                          # what is running / exited
+podman logs api                       # e.g. "Waiting for database..." retries
+podman inspect api --format '{{.State.Status}} {{.NetworkSettings.Networks}}'
+podman stop ui && podman start ui     # lifecycle
+podman exec -it db psql -U equip -d equipment -c 'SELECT * FROM equipment;'
+podman exec ui wget -qO- http://api:5000/equipment   # test name resolution
+podman volume inspect pgdata          # where the data lives on the host
+podman rm -f ui api db                # remove containers; pgdata keeps the data
 ```
 
 ## Quick start — CLI only (SQLite)

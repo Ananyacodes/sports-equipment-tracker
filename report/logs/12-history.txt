@@ -1,0 +1,9 @@
+$ podman exec ui python3 -c "import requests;[print(t['ts'][:19],t['action'].ljust(6),str(t['quantity']).rjust(2),t['name'].ljust(17),t['person']) for t in requests.get('http://api:5000/history').json()]"
+2026-11-14T12:50:41 issue   3 basketball        Arjun
+2026-11-14T12:50:39 return  3 football gloves   Sneha
+2026-11-14T12:50:39 return  1 cricket bat       Rahul
+2026-11-14T12:50:39 issue   4 football gloves   Sneha
+2026-11-14T12:50:39 issue   3 badminton racket  Rahul
+2026-11-14T12:50:39 issue   2 basketball        Priya
+2026-11-14T12:50:39 issue   6 cricket bat       Rahul
+

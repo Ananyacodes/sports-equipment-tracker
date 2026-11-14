@@ -1,0 +1,9 @@
+$ podman run -d --name ui2 -p 8080:8080 sports-tracker-ui:1.0
+Error: rootlessport listen tcp 0.0.0.0:8080: bind: address already in use
+
+$ podman rm -f --ignore ui2 >/dev/null; podman run -d --name ui2 --network equip-net -p 8081:8080 -e API_URL=http://api:5000 sports-tracker-ui:1.0 >/dev/null; sleep 3; curl -4 -s -o /dev/null -w 'second UI on 8081: HTTP %{http_code}\n' http://127.0.0.1:8081/
+second UI on 8081: HTTP 200
+
+$ podman rm -f -t 1 ui2
+ui2
+

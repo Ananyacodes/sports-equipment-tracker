@@ -1,0 +1,29 @@
+$ podman volume create tracker-data
+tracker-data
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 add Football --quantity 10 --threshold 3
+Added 'Football': qty=10, threshold=3
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 add Volleyball --quantity 4 --threshold 2
+Added 'Volleyball': qty=4, threshold=2
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 issue Football --quantity 8 --person Rahul
+Issued 8x 'Football' to Rahul. Remaining: 2
+WARNING: 'Football' stock (2) is below threshold (3).
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 return Football --quantity 2 --person Rahul
+Returned 2x 'Football' from Rahul. Available: 4
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 issue Volleyball --quantity 9 --person Priya
+Error: insufficient stock for 'Volleyball' (have 4, need 9).
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 list
+Equipment     Qty  Threshold  Status
+--------------------------------------
+Football        4          3  OK
+Volleyball      4          2  OK
+
+$ podman run --rm -v tracker-data:/app/data sports-tracker-cli:1.0 history
+[2026-11-14T12:53:00+00:00] return   2x Football (Rahul)
+[2026-11-14T12:52:58+00:00] issue    8x Football (Rahul)
+

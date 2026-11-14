@@ -1,0 +1,24 @@
+$ podman build -t sports-tracker-ui:1.0 -f Containerfile.ui .
+STEP 1/7: FROM python:3.12-alpine
+STEP 2/7: WORKDIR /app
+--> Using cache b7addf2a94a2d05277d4a835546a06d1a6b0cce6ef99fe48c4b447ede85fd09f
+--> b7addf2a94a2
+STEP 3/7: COPY requirements-ui.txt .
+--> Using cache 05e9762b95ab1f4f99bc103c30b4511e2c781a3f870d562ffb9758fb31d85a39
+--> 05e9762b95ab
+STEP 4/7: RUN pip install --no-cache-dir -r requirements-ui.txt
+--> Using cache f0d15fe9803a680c12b0c184f93a0d901e4fb87af7279de67386123f59a29c01
+--> f0d15fe9803a
+STEP 5/7: COPY ui.py .
+--> Using cache 514b0b2fb0842b44e9f0ff88f514bbf19101845b2201a15e76e6b973f6f8d17d
+--> 514b0b2fb084
+STEP 6/7: EXPOSE 8080
+--> Using cache cf463043f8a6becedefbe3c067f32d303ad30cbaaafa450369cc4e1c4f84d399
+--> cf463043f8a6
+STEP 7/7: CMD ["python3", "ui.py"]
+--> Using cache a15905af0ae123763dc2ee1ba790dcf25d8a40518c0d585a7b5914de8655b714
+COMMIT sports-tracker-ui:1.0
+--> a15905af0ae1
+Successfully tagged localhost/sports-tracker-ui:1.0
+a15905af0ae123763dc2ee1ba790dcf25d8a40518c0d585a7b5914de8655b714
+

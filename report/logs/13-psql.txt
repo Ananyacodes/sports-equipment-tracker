@@ -1,0 +1,18 @@
+$ podman exec db psql -U equip -d equipment -c 'SELECT name, quantity, threshold, quantity < threshold AS low_stock FROM equipment ORDER BY name;'
+       name       | quantity | threshold | low_stock 
+------------------+----------+-----------+-----------
+ badminton racket |        1 |         2 | t
+ basketball       |        1 |         2 | t
+ cricket bat      |        3 |         3 | f
+ football gloves  |        4 |         2 | f
+ hockey stick     |        3 |         4 | t
+(5 rows)
+
+
+$ podman exec db psql -U equip -d equipment -c 'SELECT count(*) AS transactions FROM transactions;'
+ transactions 
+--------------
+            7
+(1 row)
+
+

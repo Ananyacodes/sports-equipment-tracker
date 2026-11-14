@@ -1,0 +1,6 @@
+$ podman ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}' --filter network=equip-net
+NAMES       IMAGE                                 STATUS         PORTS
+db          docker.io/library/postgres:16-alpine  Up 12 seconds  
+api         localhost/sports-tracker-api:1.0      Up 10 seconds  
+ui          localhost/sports-tracker-ui:1.0       Up 9 seconds   0.0.0.0:8080->8080/tcp
+

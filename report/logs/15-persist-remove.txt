@@ -1,0 +1,11 @@
+$ podman rm -f -t 2 ui api db
+db
+ui
+api
+
+$ podman ps -a --filter network=equip-net
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+
+$ podman volume inspect pgdata --format '{{.Name}} mounted at {{.Mountpoint}}'
+pgdata mounted at /home/atharv/.local/share/containers/storage/volumes/pgdata/_data
+

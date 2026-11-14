@@ -1,0 +1,14 @@
+$ podman run -d --name api --network equip-net -e PGHOST=database -e PGUSER=equip -e PGPASSWORD=equippass -e PGDATABASE=equipment sports-tracker-api:1.0 >/dev/null; sleep 5; echo started
+started
+
+$ podman logs --tail 3 api
+Waiting for database... (2/20): Can't create a connection to host database and port 5432 (timeout is None and source_address is None).
+Waiting for database... (3/20): Can't create a connection to host database and port 5432 (timeout is None and source_address is None).
+Waiting for database... (4/20): Can't create a connection to host database and port 5432 (timeout is None and source_address is None).
+
+$ curl -4 -s -o /dev/null -w 'UI status: HTTP %{http_code}\n' http://127.0.0.1:8080/
+UI status: HTTP 500
+
+$ podman inspect api --format '{{range .Config.Env}}{{println .}}{{end}}' | grep PGHOST
+PGHOST=database
+

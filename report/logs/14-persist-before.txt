@@ -1,0 +1,11 @@
+$ podman exec db psql -U equip -d equipment -c 'SELECT name, quantity, threshold FROM equipment ORDER BY name;'
+       name       | quantity | threshold 
+------------------+----------+-----------
+ badminton racket |        3 |         2
+ basketball       |        1 |         2
+ cricket bat      |        2 |         3
+ football gloves  |        4 |         2
+ hockey stick     |        3 |         4
+(5 rows)
+
+

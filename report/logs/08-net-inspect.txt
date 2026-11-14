@@ -1,0 +1,12 @@
+$ podman network inspect equip-net --format '{{.Name}} driver={{.Driver}} subnet={{range .Subnets}}{{.Subnet}}{{end}} gateway={{range .Subnets}}{{.Gateway}}{{end}} dns={{.DNSEnabled}}'
+equip-net driver=bridge subnet=10.89.3.0/24 gateway=10.89.3.1 dns=true
+
+$ podman inspect db api ui --format '{{.Name}} -> {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+db -> 10.89.3.5
+api -> 10.89.3.6
+ui -> 10.89.3.7
+
+$ podman exec ui python3 -c "import socket;print('api resolves to',socket.gethostbyname('api'));print('db resolves to',socket.gethostbyname('db'))"
+api resolves to 10.89.3.6
+db resolves to 10.89.3.5
+
